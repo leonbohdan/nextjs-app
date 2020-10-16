@@ -1,6 +1,5 @@
 import 'date-fns';
 import Head from 'next/head';
-import styles from '../styles/Home.module.scss';
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -8,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useState } from 'react';
 import { Formik } from 'formik';
+import MainLayout from '../components/MainLayout';
 
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -30,21 +30,20 @@ export default function Index() {
     setSelectedSecondDate(date);
   };
 
-  return (
-    <Container>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  console.log(selectedFirstDate, selectedSecondDate);
 
-      {/* <Box
+  return (
+    <MainLayout title='Start page'>
+      <Container>
+
+        {/* <Box
         display="flex"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
       > */}
         <Typography>
-          <h1>Create Next App</h1>
+          <h1>Choose the start and end date</h1>
         </Typography>
 
         {/* <Formik
@@ -76,12 +75,12 @@ export default function Index() {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
+              // disableToolbar
+              // variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
               id="date-picker-inline"
-              label="Date picker inline"
+              label="Choose first day"
               value={selectedFirstDate}
               onChange={firstHandleDateChange}
               KeyboardButtonProps={{
@@ -91,7 +90,7 @@ export default function Index() {
             <KeyboardDatePicker
               margin="normal"
               id="date-picker-dialog"
-              label="Date picker dialog"
+              label="Choose last day"
               format="MM/dd/yyyy"
               value={selectedSecondDate}
               onChange={secondHandleDateChange}
@@ -116,20 +115,13 @@ export default function Index() {
           <Box p={1}>
             <Link href="/address">
               <Button variant="outlined" color="primary">
-                To address
-              </Button>
-            </Link>
-          </Box>
-
-          <Box p={1}>
-            <Link href="/summary">
-              <Button variant="outlined" color="primary">
-                To summary
+                Go to the next step
               </Button>
             </Link>
           </Box>
         </Box>
-      {/* </Box> */}
-    </Container>
+        {/* </Box> */}
+      </Container>
+    </MainLayout>
   );
 }

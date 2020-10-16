@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import MainLayout from '../components/MainLayout';
 import React, { useState } from "react";
 import {
   withScriptjs,
@@ -35,34 +36,33 @@ const mapElementStyle = { height: "100%" };
 
 export default function Summary() {
   return (
-    <Container>
-      <Head>
-        <title>Summary</title>
-      </Head>
+    <MainLayout title="Summary">
+      <Container>
 
-      {/* <Box
+        {/* <Box
         display="flex"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
       > */}
-      <Typography>
-        <h1>Summary</h1>
-      </Typography>
+        <Typography>
+          <h1>Summary</h1>
+        </Typography>
 
-      <RegularMap
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M"
-        loadingElement={<div style={loadingElementStyle} />}
-        containerElement={<div style={containerElementStyle} />}
-        mapElement={<div style={mapElementStyle} />}
-      />
+        <RegularMap
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M"
+          loadingElement={<div style={loadingElementStyle} />}
+          containerElement={<div style={containerElementStyle} />}
+          mapElement={<div style={mapElementStyle} />}
+        />
 
-      <Link href="/">
-        <Button variant="outlined" color="primary">
-          Back Home
-        </Button>
-      </Link>
-      {/* </Box> */}
-    </Container>
+        <Link href="/">
+          <Button variant="outlined" color="primary">
+            Back Home
+          </Button>
+        </Link>
+        {/* </Box> */}
+      </Container>
+    </MainLayout>
   );
 }
