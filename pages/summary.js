@@ -1,44 +1,48 @@
 import Link from 'next/link';
-import Head from 'next/head';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import MainLayout from '../components/MainLayout';
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
 } from "react-google-maps";
-
-const defaultCenter = { lat: 50.45466, lng: 30.5238 };
-
-const defaultOptions = { scrollwheel: false };
-
-const RegularMap = withScriptjs(
-  withGoogleMap((props) => (
-    <GoogleMap
-      defaultZoom={10}
-      defaultCenter={defaultCenter}
-      defaultOptions={defaultOptions}
-    >
-      <Marker position={defaultCenter} />
-    </GoogleMap>
-  )),
-);
-
-const loadingElementStyle = { height: "100%" };
-const containerElementStyle = { height: "480px" };
-const mapElementStyle = { height: "100%" };
-
+import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Summary() {
+  // const dispatch = useContext(DispatchContext);
+  const state = useContext(StateContext);
+  console.log("1", state.coordinates);
+
+  // Kyiv coordinates
+  // const defaultCenter = { lat: 50.45466, lng: 30.5238 };
+  const defaultCenter = state.coordinates;
+
+  const defaultOptions = { scrollwheel: false };
+
+  const RegularMap = withScriptjs(
+    withGoogleMap((props) => (
+      <GoogleMap
+        defaultZoom={10}
+        defaultCenter={defaultCenter}
+        defaultOptions={defaultOptions}
+      >
+        <Marker position={defaultCenter} />
+      </GoogleMap>
+    )),
+  );
+
+  const loadingElementStyle = { height: "100%" };
+  const containerElementStyle = { height: "480px" };
+  const mapElementStyle = { height: "100%" };
+
   return (
     <MainLayout title="Summary">
       <Container>
-
         {/* <Box
         display="flex"
         flexDirection="column"

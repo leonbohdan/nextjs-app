@@ -6,14 +6,21 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import MainLayout from '../components/MainLayout';
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react";
 import PlacesAutocomplete, { 
   geocodeByAddress, getLatLng 
 } from 'react-places-autocomplete';
+import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Address() {
+  const dispatch = useContext(DispatchContext);
+  const state = useContext(StateContext);
+  console.log(state.coordinates);
+
   const [address, setAddress ] = useState('');
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+
+  console.log(address, coordinates);
   
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
@@ -21,10 +28,11 @@ export default function Address() {
     setAddress(value);
     setCoordinates(latLng);
 
-    console.log(latLng);
-  };
+    dispatch({ type: "coordinates", payload: latLng });
+    dispatch({ type: "address", payload: latLng });
 
-  console.log(coordinates);
+    console.log(results);
+  };
 
   return (
     <MainLayout title="Address">
@@ -101,7 +109,10 @@ export default function Address() {
 
           <Box p={1}>
             <Link href="/summary">
-              <Button variant="outlined" color="primary">
+              <Button
+                variant="outlined"
+                color="primary"
+              >
                 Go to the next step
               </Button>
             </Link>

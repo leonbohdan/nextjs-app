@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { useState } from 'react';
+import { useState, useContext } from "react";
 import { Formik } from 'formik';
 import MainLayout from '../components/MainLayout';
 
@@ -16,6 +16,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Index() {
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
