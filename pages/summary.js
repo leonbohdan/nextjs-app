@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Divider from "@material-ui/core/Divider";
+import Paper from '@material-ui/core/Paper';
 import MainLayout from '../components/MainLayout';
 import React, { useContext } from "react";
 import {
@@ -17,6 +19,9 @@ export default function Summary() {
   // const dispatch = useContext(DispatchContext);
   const state = useContext(StateContext);
   console.log("1", state.coordinates);
+  console.log(state.address);
+  console.log(state.startDate);
+  console.log(state.endDate);
 
   // Kyiv coordinates
   // const defaultCenter = { lat: 50.45466, lng: 30.5238 };
@@ -51,20 +56,26 @@ export default function Summary() {
       > */}
         <Typography>
           <h1>Summary</h1>
+          <Divider />
+          <p>Information about address</p>
         </Typography>
 
-        <RegularMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M"
-          loadingElement={<div style={loadingElementStyle} />}
-          containerElement={<div style={containerElementStyle} />}
-          mapElement={<div style={mapElementStyle} />}
-        />
+        <Paper elevation={3}>
+          <RegularMap
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M"
+            loadingElement={<div style={loadingElementStyle} />}
+            containerElement={<div style={containerElementStyle} />}
+            mapElement={<div style={mapElementStyle} />}
+          />
+        </Paper>
 
-        <Link href="/">
-          <Button variant="outlined" color="primary">
-            Back Home
-          </Button>
-        </Link>
+        <Box p={1}>
+          <Link href="/">
+            <Button variant="outlined" color="primary" p={4}>
+              Back Home
+            </Button>
+          </Link>
+        </Box>
         {/* </Box> */}
       </Container>
     </MainLayout>

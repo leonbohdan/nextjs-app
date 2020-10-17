@@ -27,13 +27,13 @@ const reducer = (state, action) => {
     case 'startDate':
       return {
         ...state,
-        startDate: [...state.startDate, action.payload],
+        startDate: action.payload,
       };
     
     case 'endDate':
       return {
         ...state,
-        endDate: [...state.endDate, action.payload],
+        endDate: action.payload,
       };
   
     default:

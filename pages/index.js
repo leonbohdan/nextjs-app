@@ -1,10 +1,12 @@
 import 'date-fns';
-import Head from 'next/head';
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 import { useState, useContext } from "react";
 import { Formik } from 'formik';
 import MainLayout from '../components/MainLayout';
@@ -19,24 +21,51 @@ import {
 import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Index() {
-  const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
-  const [selectedSecondDate, setSelectedSecondDate] = useState(new Date());
-  // const [selectedTime, setSelectedTime] = React.useState(new Date("2014-08-18T21:11:54"));
+  const dispatch = useContext(DispatchContext);
+  const { startDate, endDate } = useContext(StateContext);
+  console.log(startDate);
+  console.log(endDate);
+
   
+  // const [selectedTime, setSelectedTime] = React.useState(new Date("2014-08-18T21:11:54"));
+
+  const getYear = () => {
+    return selectedFirstDate.getFullYear();
+  };
+
+  const getMonth = () => {
+    return selectedFirstDate.getMonth();
+  };
+
+  const getDay = () => {
+    return selectedFirstDate.getDate();
+  };
+
+  const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
+  const [selectedSecondDate, setSelectedSecondDate] = useState(
+    new Date(getYear(), getMonth(), getDay() + 1),
+  );
+
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
+    setSelectedSecondDate(date);
+
+    dispatch({ type: "startDate", payload: date });
   };
 
   const secondHandleDateChange = (date) => {
     setSelectedSecondDate(date);
+
+    dispatch({ type: "endDate", payload: date });
   };
+
+  // const longText = `Choose first and last date`;
 
   console.log(selectedFirstDate, selectedSecondDate);
 
   return (
-    <MainLayout title='Start page'>
+    <MainLayout title="Start page">
       <Container>
-
         {/* <Box
         display="flex"
         flexDirection="column"
@@ -73,33 +102,37 @@ export default function Index() {
           )}
         </Formik> */}
 
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
-            <KeyboardDatePicker
-              // disableToolbar
-              // variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              label="Choose first day"
-              value={selectedFirstDate}
-              onChange={firstHandleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-            <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Choose last day"
-              format="MM/dd/yyyy"
-              value={selectedSecondDate}
-              onChange={secondHandleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-            {/* <KeyboardTimePicker
+        <Paper elevation={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                // disableToolbar
+                // variant="inline"
+                margin="normal"
+                minDate={new Date()}
+                label="Choose first day"
+                format="MM/dd/yyyy"
+                // id="date-picker-inline"
+                value={selectedFirstDate}
+                onChange={firstHandleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+
+              <KeyboardDatePicker
+                margin="normal"
+                // id="date-picker-dialog"
+                label="Choose last day"
+                minDate={selectedFirstDate}
+                format="MM/dd/yyyy"
+                value={selectedSecondDate}
+                onChange={secondHandleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+              {/* <KeyboardTimePicker
               margin="normal"
               id="time-picker"
               label="Time picker"
@@ -109,15 +142,39 @@ export default function Index() {
                 "aria-label": "change time",
               }}
             /> */}
-          </Grid>
-        </MuiPickersUtilsProvider>
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </Paper>
 
         <Box display="flex" flexDirection="row">
           <Box p={1}>
             <Link href="/address">
-              <Button variant="outlined" color="primary">
+              {startDate === "" || endDate === "" ? (
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Choose first and last date before next step"
+                >
+                  <span>
+                    <Button variant="outlined" color="primary" disabled>
+                      Go to the next step
+                    </Button>
+                  </span>
+                </Tooltip>
+              ) : (
+                <Button variant="outlined" color="primary">
+                  Go to the next step
+                </Button>
+              )}
+              {/* <Button
+                variant="outlined"
+                color="primary"
+                // onClick={onClick}
+                className={CN("", { disabled: endDate === "" })}
+                // {endDate === '' ? disabled : ''}
+                // disabled
+              >
                 Go to the next step
-              </Button>
+              </Button> */}
             </Link>
           </Box>
         </Box>
