@@ -26,7 +26,6 @@ export default function Index() {
   console.log(startDate);
   console.log(endDate);
 
-  
   // const [selectedTime, setSelectedTime] = React.useState(new Date("2014-08-18T21:11:54"));
 
   const getYear = () => {
@@ -58,8 +57,6 @@ export default function Index() {
 
     dispatch({ type: "endDate", payload: date });
   };
-
-  // const longText = `Choose first and last date`;
 
   console.log(selectedFirstDate, selectedSecondDate);
 
@@ -102,7 +99,7 @@ export default function Index() {
           )}
         </Formik> */}
 
-        <Paper elevation={3}>
+        <Paper elevation={3} style={{ maxWidth: 600 }}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
               <KeyboardDatePicker
@@ -148,34 +145,25 @@ export default function Index() {
 
         <Box display="flex" flexDirection="row">
           <Box p={1}>
-            <Link href="/address">
-              {startDate === "" || endDate === "" ? (
-                <Tooltip
-                  TransitionComponent={Zoom}
-                  title="Choose first and last date before next step"
-                >
-                  <span>
-                    <Button variant="outlined" color="primary" disabled>
-                      Go to the next step
-                    </Button>
-                  </span>
-                </Tooltip>
-              ) : (
+            {startDate === "" || endDate === "" ? (
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Choose the first and the last date before the next step"
+                leaveDelay={200}
+              >
+                <span>
+                  <Button variant="outlined" color="primary" disabled>
+                    Go to the next step
+                  </Button>
+                </span>
+              </Tooltip>
+            ) : (
+              <Link href="/address">
                 <Button variant="outlined" color="primary">
                   Go to the next step
                 </Button>
-              )}
-              {/* <Button
-                variant="outlined"
-                color="primary"
-                // onClick={onClick}
-                className={CN("", { disabled: endDate === "" })}
-                // {endDate === '' ? disabled : ''}
-                // disabled
-              >
-                Go to the next step
-              </Button> */}
-            </Link>
+              </Link>
+            )}
           </Box>
         </Box>
         {/* </Box> */}

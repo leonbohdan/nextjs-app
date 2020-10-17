@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function MainLayout({ children, title = '' }) {
@@ -15,12 +14,9 @@ export default function MainLayout({ children, title = '' }) {
         <meta name='description' content='this is nextjs app' />
         <meta charSet='utf-8' />
 
-        <script
-          // defer
-          // src={googleMapURL}
-          // src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M&libraries=places&callback=initAutocomplete"
+        {/* <script
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M&libraries=places"
-        ></script>
+        ></script> */}
       </Head>
 
       <Container>

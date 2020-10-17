@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Divider from "@material-ui/core/Divider";
 import Paper from '@material-ui/core/Paper';
 import MainLayout from '../components/MainLayout';
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   withScriptjs,
   withGoogleMap,
@@ -16,23 +16,43 @@ import {
 import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Summary() {
-  // const dispatch = useContext(DispatchContext);
-  const state = useContext(StateContext);
-  console.log("1", state.coordinates);
-  console.log(state.address);
-  console.log(state.startDate);
-  console.log(state.endDate);
+  const { coordinates, address, startDate, endDate } = useContext(StateContext);
+  console.log("1", coordinates);
+  console.log(address);
+  console.log(startDate);
+  console.log(endDate);
+
+  const date1 = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth() + 1,
+    startDate.getDate(),
+  );
+  const date2 = new Date(
+    endDate.getFullYear(),
+    endDate.getMonth() + 1,
+    endDate.getDate(),
+  );
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  console.log(diffDays);
+
+  // const [streetNumber, setStreetNumber] = useState('');
+
+  // setStreetNumber(address.find(el => el.types[0] === 'street_number'));
+
+  // const streetNumber = address.find(el => el.types[0] === 'street_number');
+  // console.log(streetNumber);
 
   // Kyiv coordinates
   // const defaultCenter = { lat: 50.45466, lng: 30.5238 };
-  const defaultCenter = state.coordinates;
+  const defaultCenter = coordinates;
 
   const defaultOptions = { scrollwheel: false };
 
   const RegularMap = withScriptjs(
     withGoogleMap((props) => (
       <GoogleMap
-        defaultZoom={10}
+        defaultZoom={12}
         defaultCenter={defaultCenter}
         defaultOptions={defaultOptions}
       >
@@ -57,7 +77,23 @@ export default function Summary() {
         <Typography>
           <h1>Summary</h1>
           <Divider />
-          <p>Information about address</p>
+
+          <div>
+            <div>
+              From {`${startDate.getDate()}.${startDate.getMonth() + 1}.${startDate.getFullYear()}`}
+            </div>
+
+            <div>
+              To {`${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`}
+            </div>
+
+            <div>
+              Total days: {diffDays}
+            </div>
+          </div>
+          <Divider />
+
+          <p>{address}</p>
         </Typography>
 
         <Paper elevation={3}>
