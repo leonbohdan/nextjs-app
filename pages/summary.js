@@ -34,14 +34,6 @@ export default function Summary() {
   );
   const diffTime = Math.abs(date2 - date1);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  console.log(diffDays);
-
-  // const [streetNumber, setStreetNumber] = useState('');
-
-  // setStreetNumber(address.find(el => el.types[0] === 'street_number'));
-
-  // const streetNumber = address.find(el => el.types[0] === 'street_number');
-  // console.log(streetNumber);
 
   // Kyiv coordinates
   // const defaultCenter = { lat: 50.45466, lng: 30.5238 };
@@ -68,33 +60,53 @@ export default function Summary() {
   return (
     <MainLayout title="Summary">
       <Container>
-        {/* <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      > */}
-        <Typography>
-          <h1>Summary</h1>
-          <Divider />
+        <Box p={4}>
+          <Paper elevation={3}>
+            <Typography>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-around"
+              >
+                <h1>Summary</h1>
+              </Box>
+              <Divider />
 
-          <div>
-            <div>
-              From {`${startDate.getDate()}.${startDate.getMonth() + 1}.${startDate.getFullYear()}`}
-            </div>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-around"
+              >
+                <div>
+                  From{": "}
+                  {`${startDate.getDate()}.${
+                    startDate.getMonth() + 1
+                  }.${startDate.getFullYear()}`}
+                </div>
+                <Divider orientation="vertical" flexItem />
 
-            <div>
-              To {`${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`}
-            </div>
+                <div>
+                  To{": "}
+                  {`${endDate.getDate()}.${
+                    endDate.getMonth() + 1
+                  }.${endDate.getFullYear()}`}
+                </div>
+                <Divider orientation="vertical" flexItem />
 
-            <div>
-              Total days: {diffDays}
-            </div>
-          </div>
-          <Divider />
+                <div>Total days: {diffDays}</div>
+              </Box>
+              <Divider />
 
-          <p>{address}</p>
-        </Typography>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-around"
+              >
+                <p>{address}</p>
+              </Box>
+            </Typography>
+          </Paper>
+        </Box>
 
         <Paper elevation={3}>
           <RegularMap
@@ -105,14 +117,20 @@ export default function Summary() {
           />
         </Paper>
 
-        <Box p={1}>
-          <Link href="/">
-            <Button variant="outlined" color="primary" p={4}>
-              Back Home
-            </Button>
-          </Link>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box p={4}>
+            <Link href="/">
+              <Button variant="outlined" color="primary">
+                Back Home
+              </Button>
+            </Link>
+          </Box>
         </Box>
-        {/* </Box> */}
       </Container>
     </MainLayout>
   );

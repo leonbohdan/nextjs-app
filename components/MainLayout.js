@@ -13,10 +13,6 @@ export default function MainLayout({ children, title = '' }) {
         <meta name='keywords' content='next,javascript,nextjs,react,redux' />
         <meta name='description' content='this is nextjs app' />
         <meta charSet='utf-8' />
-
-        {/* <script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M&libraries=places"
-        ></script> */}
       </Head>
 
       <Container>

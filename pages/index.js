@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import { useState, useContext } from "react";
-import { Formik } from 'formik';
+// import { Formik } from 'formik';
 import MainLayout from '../components/MainLayout';
 
 import Grid from '@material-ui/core/Grid';
@@ -63,53 +63,25 @@ export default function Index() {
   return (
     <MainLayout title="Start page">
       <Container>
-        {/* <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      > */}
-        <Typography>
-          <h1>Choose the start and end date</h1>
-        </Typography>
-
-        {/* <Formik
-          initialValues={{ name: "jared" }}
-          onSubmit={(values, actions) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
-            }, 1000);
-          }}
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
         >
-          {(props) => (
-            <form onSubmit={props.handleSubmit}>
-              <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.name}
-                name="name"
-              />
-              {props.errors.name && (
-                <div id="feedback">{props.errors.name}</div>
-              )}
-              <button type="submit">Submit</button>
-            </form>
-          )}
-        </Formik> */}
+          <Typography>
+            <h1>Choose the start and end date</h1>
+          </Typography>
+        </Box>
 
-        <Paper elevation={3} style={{ maxWidth: 600 }}>
+        <Paper elevation={2}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
               <KeyboardDatePicker
-                // disableToolbar
-                // variant="inline"
                 margin="normal"
                 minDate={new Date()}
                 label="Choose first day"
                 format="MM/dd/yyyy"
-                // id="date-picker-inline"
                 value={selectedFirstDate}
                 onChange={firstHandleDateChange}
                 KeyboardButtonProps={{
@@ -119,7 +91,6 @@ export default function Index() {
 
               <KeyboardDatePicker
                 margin="normal"
-                // id="date-picker-dialog"
                 label="Choose last day"
                 minDate={selectedFirstDate}
                 format="MM/dd/yyyy"
@@ -129,22 +100,17 @@ export default function Index() {
                   "aria-label": "change date",
                 }}
               />
-              {/* <KeyboardTimePicker
-              margin="normal"
-              id="time-picker"
-              label="Time picker"
-              value={selectedTime}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change time",
-              }}
-            /> */}
             </Grid>
           </MuiPickersUtilsProvider>
         </Paper>
 
-        <Box display="flex" flexDirection="row">
-          <Box p={1}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box p={4}>
             {startDate === "" || endDate === "" ? (
               <Tooltip
                 TransitionComponent={Zoom}
@@ -166,7 +132,6 @@ export default function Index() {
             )}
           </Box>
         </Box>
-        {/* </Box> */}
       </Container>
     </MainLayout>
   );
