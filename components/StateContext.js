@@ -6,8 +6,8 @@ const initialState = {
     lng: null,
   },
   address: '',
-  startDate: '',
-  endDate: '',
+  startDate: new Date(),
+  endDate: new Date(),
 };
 
 const reducer = (state, action) => {

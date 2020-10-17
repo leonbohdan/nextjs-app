@@ -28,22 +28,9 @@ export default function Index() {
 
   // const [selectedTime, setSelectedTime] = React.useState(new Date("2014-08-18T21:11:54"));
 
-  const getYear = () => {
-    return selectedFirstDate.getFullYear();
-  };
-
-  const getMonth = () => {
-    return selectedFirstDate.getMonth();
-  };
-
-  const getDay = () => {
-    return selectedFirstDate.getDate();
-  };
-
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
-  const [selectedSecondDate, setSelectedSecondDate] = useState(
-    new Date(getYear(), getMonth(), getDay() + 1),
-  );
+  const [selectedSecondDate, setSelectedSecondDate] = useState(new Date());
+  const [active, setActive] = useState(false);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
@@ -54,6 +41,7 @@ export default function Index() {
 
   const secondHandleDateChange = (date) => {
     setSelectedSecondDate(date);
+    setActive(true);
 
     dispatch({ type: "endDate", payload: date });
   };
@@ -111,7 +99,7 @@ export default function Index() {
           alignItems="center"
         >
           <Box p={4}>
-            {startDate === "" || endDate === "" ? (
+            {!active ? (
               <Tooltip
                 TransitionComponent={Zoom}
                 title="Choose the first and the last date before the next step"
