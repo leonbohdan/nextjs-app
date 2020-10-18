@@ -5,9 +5,11 @@ const initialState = {
     lat: null,
     lng: null,
   },
-  address: '',
+  address: "",
   startDate: new Date(),
   endDate: new Date(),
+  URL:
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M&libraries=places",
 };
 
 const reducer = (state, action) => {

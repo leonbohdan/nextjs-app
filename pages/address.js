@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Address() {
   const dispatch = useContext(DispatchContext);
-  const { coordinates, startDate, endDate, address } = useContext(StateContext);
+  const { coordinates, startDate, endDate, address, URL } = useContext(StateContext);
   console.log(coordinates);
   console.log(address);
 
@@ -59,14 +59,13 @@ export default function Address() {
     const latLng = await getLatLng(results[0]);
 
     dispatch({ type: "coordinates", payload: latLng });
-    // dispatch({ type: "address", payload: results[0].address_components });
     dispatch({ type: "address", payload: value });
   };
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {
       loadScript(
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M&libraries=places",
+        URL,
         document.querySelector("head"),
         "google-maps",
       );
@@ -127,9 +126,7 @@ export default function Address() {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography>
-          <h1>Choose the place</h1>
-        </Typography>
+        <h1>Choose the place</h1>
 
         <Autocomplete
           style={{ width: 300 }}
@@ -174,7 +171,7 @@ export default function Address() {
                 <Grid item>
                   <LocationOnIcon className={classes.icon} />
                 </Grid>
-                
+
                 <Grid item xs>
                   {parts.map((part, index) => (
                     <span

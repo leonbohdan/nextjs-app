@@ -15,6 +15,9 @@ import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
+  DateTimePicker,
+  DatePicker,
+  KeyboardDateTimePicker,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
@@ -26,77 +29,164 @@ export default function Index() {
   console.log(startDate);
   console.log(endDate);
 
-  // const [selectedTime, setSelectedTime] = React.useState(new Date("2014-08-18T21:11:54"));
-
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
-  const [selectedSecondDate, setSelectedSecondDate] = useState(new Date());
+  const [selectedSecondDate, setSelectedSecondDate] = useState(
+    new Date(
+      selectedFirstDate.getFullYear(),
+      selectedFirstDate.getMonth(),
+      selectedFirstDate.getDate(),
+      selectedFirstDate.getHours() + 4,
+      selectedFirstDate.getMinutes(),
+    ),
+  );
   const [active, setActive] = useState(false);
+  const [firstDateChoose, setFirstDateChoose] = useState(false);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
-    setSelectedSecondDate(date);
+    setFirstDateChoose(true);
+    setSelectedSecondDate(
+      new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours() + 4,
+        date.getMinutes(),
+      ),
+    );
 
     dispatch({ type: "startDate", payload: date });
   };
 
   const secondHandleDateChange = (date) => {
-    setSelectedSecondDate(date);
-    setActive(true);
+    if (firstDateChoose) {
+      setSelectedSecondDate(
+        new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours() - 2,
+          date.getMinutes(),
+        ),
+      );
 
-    dispatch({ type: "endDate", payload: date });
+      dispatch({
+        type: "endDate",
+        payload: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours() - 2,
+          date.getMinutes(),
+        ),
+      });
+    } else {
+      setSelectedSecondDate(
+        new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours(),
+          date.getMinutes(),
+        ),
+      );
+
+      dispatch({
+        type: "endDate",
+        payload: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours(),
+          date.getMinutes(),
+        ),
+      });
+    }
+
+    setActive(true);
   };
 
   console.log(selectedFirstDate, selectedSecondDate);
 
   return (
     <MainLayout title="Start page">
-      <Container>
+      <Container maxWidth="sm">
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <Typography>
-            <h1>Choose the start and end date</h1>
-          </Typography>
+          <h1>Choose the start and end date</h1>
         </Box>
 
-        <Paper elevation={2}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <label for="first">
-                <KeyboardDatePicker
-                  id="first"
-                  margin="normal"
-                  minDate={new Date()}
-                  label="Choose first day"
-                  format="MM/dd/yyyy"
-                  value={selectedFirstDate}
-                  onChange={firstHandleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
-              </label>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-around"
+            alignItems="center"
+          >
+            <label htmlFor="first_date">
+              <DateTimePicker
+                id="first_date"
+                ampm={false}
+                label="Choose first day and time"
+                inputVariant="outlined"
+                value={selectedFirstDate}
+                onChange={firstHandleDateChange}
+                format="yyyy/MM/dd HH:mm"
+                margin="normal"
+                minDate={new Date()}
+                autoOk
+              />
+            </label>
 
-              <label for="second">
-                <KeyboardDatePicker
-                  id="second"
-                  margin="normal"
-                  label="Choose last day"
-                  minDate={selectedFirstDate}
-                  format="MM/dd/yyyy"
-                  value={selectedSecondDate}
-                  onChange={secondHandleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
-              </label>
-            </Grid>
-          </MuiPickersUtilsProvider>
-        </Paper>
+            <label htmlFor="second_date">
+              <DatePicker
+                id="second_date"
+                ampm={false}
+                label="Choose last day"
+                inputVariant="outlined"
+                value={selectedSecondDate}
+                onChange={secondHandleDateChange}
+                format="yyyy/MM/dd HH:mm"
+                margin="normal"
+                minDate={selectedFirstDate}
+                autoOk
+              />
+            </label>
+          </Box>
+          {/* <label htmlFor="first">
+            <KeyboardDatePicker
+              id="first"
+              margin="normal"
+              minDate={new Date()}
+              label="Choose first day"
+              format="MM/dd/yyyy"
+              value={selectedFirstDate}
+              onChange={firstHandleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </label>
+
+          <label htmlFor="second">
+            <KeyboardDatePicker
+              id="second"
+              margin="normal"
+              label="Choose last day"
+              minDate={selectedFirstDate}
+              format="MM/dd/yyyy"
+              value={selectedSecondDate}
+              onChange={secondHandleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </label> */}
+        </MuiPickersUtilsProvider>
 
         <Box
           display="flex"

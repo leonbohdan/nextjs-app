@@ -16,7 +16,9 @@ import {
 import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Summary() {
-  const { coordinates, address, startDate, endDate } = useContext(StateContext);
+  const { coordinates, address, startDate, endDate, URL } = useContext(
+    StateContext,
+  );
   console.log("1", coordinates);
   console.log(address);
   console.log(startDate);
@@ -32,17 +34,17 @@ export default function Summary() {
     endDate.getMonth() + 1,
     endDate.getDate(),
   );
+
   const diffTime = Math.abs(date2 - date1);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   const defaultCenter = coordinates;
-
   const defaultOptions = { scrollwheel: false };
 
   const RegularMap = withScriptjs(
     withGoogleMap((props) => (
       <GoogleMap
-        defaultZoom={12}
+        defaultZoom={16}
         defaultCenter={defaultCenter}
         defaultOptions={defaultOptions}
       >
@@ -60,55 +62,57 @@ export default function Summary() {
       <Container>
         <Box p={4}>
           <Paper elevation={3}>
-            <Typography>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-around"
-              >
-                <h1>Summary</h1>
-              </Box>
-              <Divider />
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-around"
+            >
+              <h1>Summary</h1>
+            </Box>
+            <Divider />
 
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-around"
-              >
-                <div>
-                  From{": "}
-                  {`${startDate.getDate()}.${
-                    startDate.getMonth() + 1
-                  }.${startDate.getFullYear()}`}
-                </div>
-                <Divider orientation="vertical" flexItem />
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-around"
+            >
+              <div>
+                From{": "}
+                {`${startDate.getFullYear()}/${
+                  startDate.getMonth() + 1
+                }/${startDate.getDate()} ` +
+                  `${startDate.getHours()}:` +
+                  `0${startDate.getMinutes()}`.slice(-2)}
+              </div>
+              <Divider orientation="vertical" flexItem />
 
-                <div>
-                  To{": "}
-                  {`${endDate.getDate()}.${
-                    endDate.getMonth() + 1
-                  }.${endDate.getFullYear()}`}
-                </div>
-                <Divider orientation="vertical" flexItem />
+              <div>
+                To{": "}
+                {`${endDate.getFullYear()}/${
+                  endDate.getMonth() + 1
+                }/${endDate.getDate()} ` +
+                  `${endDate.getHours()}:` +
+                  `0${endDate.getMinutes()}`.slice(-2)}
+              </div>
+              <Divider orientation="vertical" flexItem />
 
-                <div>Total days: {diffDays}</div>
-              </Box>
-              <Divider />
+              <div>Total days: {diffDays}</div>
+            </Box>
+            <Divider />
 
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-around"
-              >
-                <p>{address}</p>
-              </Box>
-            </Typography>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-around"
+            >
+              <p>{address}</p>
+            </Box>
           </Paper>
         </Box>
 
         <Paper elevation={3}>
           <RegularMap
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTkgp8BSD3i4Cl4Q5ps3qoqOGI94Pa0M"
+            googleMapURL={URL}
             loadingElement={<div style={loadingElementStyle} />}
             containerElement={<div style={containerElementStyle} />}
             mapElement={<div style={mapElementStyle} />}
