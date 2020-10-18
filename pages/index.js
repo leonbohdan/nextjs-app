@@ -65,29 +65,35 @@ export default function Index() {
         <Paper elevation={2}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                minDate={new Date()}
-                label="Choose first day"
-                format="MM/dd/yyyy"
-                value={selectedFirstDate}
-                onChange={firstHandleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
+              <label for="first">
+                <KeyboardDatePicker
+                  id="first"
+                  margin="normal"
+                  minDate={new Date()}
+                  label="Choose first day"
+                  format="MM/dd/yyyy"
+                  value={selectedFirstDate}
+                  onChange={firstHandleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </label>
 
-              <KeyboardDatePicker
-                margin="normal"
-                label="Choose last day"
-                minDate={selectedFirstDate}
-                format="MM/dd/yyyy"
-                value={selectedSecondDate}
-                onChange={secondHandleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
+              <label for="second">
+                <KeyboardDatePicker
+                  id="second"
+                  margin="normal"
+                  label="Choose last day"
+                  minDate={selectedFirstDate}
+                  format="MM/dd/yyyy"
+                  value={selectedSecondDate}
+                  onChange={secondHandleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </label>
             </Grid>
           </MuiPickersUtilsProvider>
         </Paper>

@@ -35,8 +35,6 @@ export default function Summary() {
   const diffTime = Math.abs(date2 - date1);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  // Kyiv coordinates
-  // const defaultCenter = { lat: 50.45466, lng: 30.5238 };
   const defaultCenter = coordinates;
 
   const defaultOptions = { scrollwheel: false };

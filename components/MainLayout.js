@@ -9,10 +9,6 @@ export default function MainLayout({ children, title = '' }) {
     <>
       <Head>
         <title>{title} | Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name='keywords' content='next,javascript,nextjs,react,redux' />
-        <meta name='description' content='this is nextjs app' />
-        <meta charSet='utf-8' />
       </Head>
 
       <Container>

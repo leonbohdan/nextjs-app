@@ -174,6 +174,7 @@ export default function Address() {
                 <Grid item>
                   <LocationOnIcon className={classes.icon} />
                 </Grid>
+                
                 <Grid item xs>
                   {parts.map((part, index) => (
                     <span
