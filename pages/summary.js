@@ -1,28 +1,23 @@
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Divider from "@material-ui/core/Divider";
 import Paper from '@material-ui/core/Paper';
 import MainLayout from '../components/MainLayout';
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
 } from "react-google-maps";
-import { StateContext, DispatchContext } from "../components/StateContext";
+import { StateContext } from "../components/StateContext";
 
 export default function Summary() {
   const { coordinates, address, startDate, endDate, URL } = useContext(
     StateContext,
   );
-  // console.log("1", coordinates); //
-  // console.log(address); //
-  // console.log(startDate); //
-  // console.log(endDate); //
 
   const date1 = new Date(
     startDate.getFullYear(),
@@ -55,12 +50,12 @@ export default function Summary() {
 
   const loadingElementStyle = { height: "100%" };
   const containerElementStyle = { height: "480px" };
-  const mapElementStyle = { height: "100%" };
+  const mapElementStyle = { height: "100%", marginTop: "40px" };
 
   return (
     <MainLayout title="Summary">
       <Container>
-        <Box p={4}>
+        <Box p={0} style={mapElementStyle}>
           <Paper elevation={3}>
             <Box
               display="flex"
@@ -77,8 +72,8 @@ export default function Summary() {
               justifyContent="space-around"
             >
               <div>
-                From{": "}
-                {`${startDate.getFullYear()}/${
+                From{`: `}
+                {` ${startDate.getFullYear()}/${
                   startDate.getMonth() + 1
                 }/${startDate.getDate()} ` +
                   `${startDate.getHours()}:` +

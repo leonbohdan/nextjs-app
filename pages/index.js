@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 // import { Formik } from 'formik';
 import MainLayout from '../components/MainLayout';
 
@@ -20,8 +20,9 @@ import { StateContext, DispatchContext } from "../components/StateContext";
 export default function Index() {
   const dispatch = useContext(DispatchContext);
   const { startDate, endDate } = useContext(StateContext);
-  // console.log(startDate); //
-  // console.log(endDate); //
+  // const state = useContext(StateContext);
+  console.log('CONT', startDate, endDate); //
+  // console.log(state); //
 
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
   const [selectedSecondDate, setSelectedSecondDate] = useState(
@@ -34,11 +35,11 @@ export default function Index() {
     ),
   );
   const [active, setActive] = useState(false);
-  const [firstDateChoose, setFirstDateChoose] = useState(false);
+  const [firstDateChoosed, setFirstDateChoosed] = useState(false);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
-    setFirstDateChoose(true);
+    setFirstDateChoosed(true);
     setSelectedSecondDate(
       new Date(
         date.getFullYear(),
@@ -53,54 +54,58 @@ export default function Index() {
   };
 
   const secondHandleDateChange = (date) => {
-    if (firstDateChoose) {
-      setSelectedSecondDate(
-        new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours() - 2,
-          date.getMinutes(),
-        ),
-      );
-
-      dispatch({
-        type: "endDate",
-        payload: new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours() - 2,
-          date.getMinutes(),
-        ),
-      });
-    } else {
-      setSelectedSecondDate(
-        new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours(),
-          date.getMinutes(),
-        ),
-      );
-
-      dispatch({
-        type: "endDate",
-        payload: new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours(),
-          date.getMinutes(),
-        ),
-      });
+    if (!firstDateChoosed) {
+      setActive();
     }
+
+      if (firstDateChoosed) {
+        setSelectedSecondDate(
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours() - 2,
+            date.getMinutes(),
+          ),
+        );
+
+        dispatch({
+          type: "endDate",
+          payload: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours() - 2,
+            date.getMinutes(),
+          ),
+        });
+      } else {
+        setSelectedSecondDate(
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+          ),
+        );
+
+        dispatch({
+          type: "endDate",
+          payload: new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+          ),
+        });
+      }
 
     setActive(true);
   };
 
-  // console.log(selectedFirstDate, selectedSecondDate); //
+  console.log('ST', selectedFirstDate, selectedSecondDate); //
 
   return (
     <MainLayout title="Start page">
@@ -137,10 +142,10 @@ export default function Index() {
             </label>
 
             <label htmlFor="second_date">
-              <DatePicker
+              <DateTimePicker
                 id="second_date"
                 ampm={false}
-                label="Choose last day"
+                label="Choose last day and time"
                 inputVariant="outlined"
                 value={selectedSecondDate}
                 onChange={secondHandleDateChange}

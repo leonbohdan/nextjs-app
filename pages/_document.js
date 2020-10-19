@@ -18,10 +18,6 @@ export default class MyDocument extends Document {
           <meta name="keywords" content="next,javascript,nextjs,react,redux" />
           <meta name="description" content="this is nextjs app" />
           <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
           <meta name="robots" content="all" />
         </Head>
 

@@ -3,10 +3,9 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import err from '../styles/error.module.scss';
 import Box from '@material-ui/core/Box';
-import Divider from "@material-ui/core/Divider";
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     margin: "auto",
     maxWidth: "100vw",

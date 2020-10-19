@@ -14,30 +14,30 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'coordinates':
+    case "coordinates":
       return {
         ...state,
         coordinates: action.payload,
       };
-    
-    case 'address':
+
+    case "address":
       return {
         ...state,
         address: action.payload,
       };
-    
-    case 'startDate':
+
+    case "startDate":
       return {
         ...state,
         startDate: action.payload,
       };
-    
-    case 'endDate':
+
+    case "endDate":
       return {
         ...state,
         endDate: action.payload,
       };
-  
+
     default:
       return state;
   }
@@ -47,10 +47,7 @@ export const DispatchContext = React.createContext(() => {});
 export const StateContext = React.createContext(initialState);
 
 export const StateProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <DispatchContext.Provider value={dispatch}>
@@ -58,5 +55,5 @@ export const StateProvider = ({ children }) => {
         {children}
       </StateContext.Provider>
     </DispatchContext.Provider>
-  )
+  );
 };

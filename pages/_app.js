@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import '../styles/globals.scss';
 import { StateProvider } from '../components/StateContext';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from '@material-ui/core/styles';
