@@ -5,24 +5,19 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import { useState, useContext, useEffect } from "react";
-// import { Formik } from 'formik';
+import { useState, useContext } from "react";
 import MainLayout from '../components/MainLayout';
 
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   DateTimePicker,
-  DatePicker,
 } from '@material-ui/pickers';
 import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Index() {
   const dispatch = useContext(DispatchContext);
   const { startDate, endDate } = useContext(StateContext);
-  // const state = useContext(StateContext);
-  console.log('CONT', startDate, endDate); //
-  // console.log(state); //
 
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
   const [selectedSecondDate, setSelectedSecondDate] = useState(
@@ -30,22 +25,19 @@ export default function Index() {
       selectedFirstDate.getFullYear(),
       selectedFirstDate.getMonth(),
       selectedFirstDate.getDate(),
-      selectedFirstDate.getHours() + 4,
+      selectedFirstDate.getHours(),
       selectedFirstDate.getMinutes(),
     ),
   );
-  const [active, setActive] = useState(false);
-  const [firstDateChoosed, setFirstDateChoosed] = useState(false);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
-    setFirstDateChoosed(true);
     setSelectedSecondDate(
       new Date(
         date.getFullYear(),
         date.getMonth(),
         date.getDate(),
-        date.getHours() + 4,
+        date.getHours(),
         date.getMinutes(),
       ),
     );
@@ -54,58 +46,27 @@ export default function Index() {
   };
 
   const secondHandleDateChange = (date) => {
-    if (!firstDateChoosed) {
-      setActive();
-    }
+    setSelectedSecondDate(
+      new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+      ),
+    );
 
-      if (firstDateChoosed) {
-        setSelectedSecondDate(
-          new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours() - 2,
-            date.getMinutes(),
-          ),
-        );
-
-        dispatch({
-          type: "endDate",
-          payload: new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours() - 2,
-            date.getMinutes(),
-          ),
-        });
-      } else {
-        setSelectedSecondDate(
-          new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours(),
-            date.getMinutes(),
-          ),
-        );
-
-        dispatch({
-          type: "endDate",
-          payload: new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours(),
-            date.getMinutes(),
-          ),
-        });
-      }
-
-    setActive(true);
+    dispatch({
+      type: "endDate",
+      payload: new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+      ),
+    });
   };
-
-  console.log('ST', selectedFirstDate, selectedSecondDate); //
 
   return (
     <MainLayout title="Start page">
@@ -138,6 +99,7 @@ export default function Index() {
                 margin="normal"
                 minDate={new Date()}
                 autoOk
+                title="Set the first day"
               />
             </label>
 
@@ -153,6 +115,7 @@ export default function Index() {
                 margin="normal"
                 minDate={selectedFirstDate}
                 autoOk
+                title="Duration can not be less than 4 hours"
               />
             </label>
           </Box>
@@ -165,10 +128,11 @@ export default function Index() {
           alignItems="center"
         >
           <Box p={4}>
-            {!active ? (
+            {Math.abs(selectedSecondDate) - Math.abs(selectedFirstDate) <=
+            14360000 ? (
               <Tooltip
                 TransitionComponent={Zoom}
-                title="Choose the first and the last date before the next step"
+                title="Duration can not be less than 4 hours"
                 leaveDelay={200}
               >
                 <span>

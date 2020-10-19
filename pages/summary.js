@@ -23,15 +23,21 @@ export default function Summary() {
     startDate.getFullYear(),
     startDate.getMonth() + 1,
     startDate.getDate(),
+    startDate.getHours(),
+    startDate.getMinutes(),
   );
   const date2 = new Date(
     endDate.getFullYear(),
     endDate.getMonth() + 1,
     endDate.getDate(),
+    endDate.getHours(),
+    endDate.getMinutes(),
   );
-
-  const diffTime = Math.abs(date2 - date1);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  const msec = date2.getTime() - date1.getTime();
+  const mins = Math.floor(msec / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
 
   const defaultCenter = coordinates;
   const defaultOptions = { scrollwheel: false };
@@ -76,8 +82,9 @@ export default function Summary() {
                 {` ${startDate.getFullYear()}/${
                   startDate.getMonth() + 1
                 }/${startDate.getDate()} ` +
-                  `${startDate.getHours()}:` +
-                  `0${startDate.getMinutes()}`.slice(-2)}
+                  `0${startDate.getHours()}`.slice(-2) +
+                  ":" +
+                  `:0${startDate.getMinutes()}`.slice(-2)}
               </div>
               <Divider orientation="vertical" flexItem />
 
@@ -86,12 +93,15 @@ export default function Summary() {
                 {`${endDate.getFullYear()}/${
                   endDate.getMonth() + 1
                 }/${endDate.getDate()} ` +
-                  `${endDate.getHours()}:` +
+                  `0${endDate.getHours()}`.slice(-2) +
+                  ":" +
                   `0${endDate.getMinutes()}`.slice(-2)}
               </div>
               <Divider orientation="vertical" flexItem />
 
-              <div>Total days: {diffDays}</div>
+              <div>
+                {`Duration: ${days} days, ${hrs % 24} hours, ${mins % 60} minutes`}
+              </div>
             </Box>
             <Divider />
 

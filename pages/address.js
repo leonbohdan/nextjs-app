@@ -41,9 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Address() {
   const dispatch = useContext(DispatchContext);
-  const { coordinates, address, URL } = useContext(StateContext);
-  // console.log(coordinates); //
-  // console.log(address); //
+  const { URL } = useContext(StateContext);
 
   const classes = useStyles();
   const [value, setValue] = useState(null);
@@ -51,8 +49,6 @@ export default function Address() {
   const [options, setOptions] = useState([]);
   const [active, setActive] = useState(false);
   const loaded = useRef(false);
-
-  // console.log(value, inputValue, options); //
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
