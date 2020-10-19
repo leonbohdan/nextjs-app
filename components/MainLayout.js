@@ -12,7 +12,7 @@ export default function MainLayout({ children, title = '' }) {
       </Head>
 
       <Container>
-        <nav>
+        {/* <nav>
           <Box display="flex" flexDirection="row">
             <Box p={1}>
               <Link href="/">
@@ -38,7 +38,7 @@ export default function MainLayout({ children, title = '' }) {
               </Link>
             </Box>
           </Box>
-        </nav>
+        </nav> */}
 
         <main>{children}</main>
       </Container>

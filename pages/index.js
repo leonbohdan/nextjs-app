@@ -2,32 +2,26 @@ import 'date-fns';
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import { useState, useContext } from "react";
 // import { Formik } from 'formik';
 import MainLayout from '../components/MainLayout';
 
-import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   DateTimePicker,
   DatePicker,
-  KeyboardDateTimePicker,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { StateContext, DispatchContext } from "../components/StateContext";
 
 export default function Index() {
   const dispatch = useContext(DispatchContext);
   const { startDate, endDate } = useContext(StateContext);
-  console.log(startDate);
-  console.log(endDate);
+  // console.log(startDate); //
+  // console.log(endDate); //
 
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
   const [selectedSecondDate, setSelectedSecondDate] = useState(
@@ -106,7 +100,7 @@ export default function Index() {
     setActive(true);
   };
 
-  console.log(selectedFirstDate, selectedSecondDate);
+  // console.log(selectedFirstDate, selectedSecondDate); //
 
   return (
     <MainLayout title="Start page">
@@ -157,35 +151,6 @@ export default function Index() {
               />
             </label>
           </Box>
-          {/* <label htmlFor="first">
-            <KeyboardDatePicker
-              id="first"
-              margin="normal"
-              minDate={new Date()}
-              label="Choose first day"
-              format="MM/dd/yyyy"
-              value={selectedFirstDate}
-              onChange={firstHandleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </label>
-
-          <label htmlFor="second">
-            <KeyboardDatePicker
-              id="second"
-              margin="normal"
-              label="Choose last day"
-              minDate={selectedFirstDate}
-              format="MM/dd/yyyy"
-              value={selectedSecondDate}
-              onChange={secondHandleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </label> */}
         </MuiPickersUtilsProvider>
 
         <Box

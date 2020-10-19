@@ -19,10 +19,10 @@ export default function Summary() {
   const { coordinates, address, startDate, endDate, URL } = useContext(
     StateContext,
   );
-  console.log("1", coordinates);
-  console.log(address);
-  console.log(startDate);
-  console.log(endDate);
+  // console.log("1", coordinates); //
+  // console.log(address); //
+  // console.log(startDate); //
+  // console.log(endDate); //
 
   const date1 = new Date(
     startDate.getFullYear(),

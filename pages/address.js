@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import Paper from '@material-ui/core/Paper';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Grid from "@material-ui/core/Grid";
@@ -42,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Address() {
   const dispatch = useContext(DispatchContext);
-  const { coordinates, startDate, endDate, address, URL } = useContext(StateContext);
-  console.log(coordinates);
-  console.log(address);
+  const { coordinates, address, URL } = useContext(StateContext);
+  // console.log(coordinates); //
+  // console.log(address); //
 
   const classes = useStyles();
   const [value, setValue] = useState(null);
@@ -52,7 +51,7 @@ export default function Address() {
   const [options, setOptions] = useState([]);
   const loaded = useRef(false);
 
-  console.log(value, inputValue, options);
+  // console.log(value, inputValue, options); //
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
