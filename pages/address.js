@@ -49,6 +49,7 @@ export default function Address() {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState([]);
+  const [active, setActive] = useState(false);
   const loaded = useRef(false);
 
   // console.log(value, inputValue, options); //
@@ -59,6 +60,7 @@ export default function Address() {
 
     dispatch({ type: "coordinates", payload: latLng });
     dispatch({ type: "address", payload: value });
+    setActive(true);
   };
 
   if (typeof window !== "undefined" && !loaded.current) {
@@ -191,7 +193,7 @@ export default function Address() {
         />
 
         <Box p={4}>
-          {!address ? (
+          {!active ? (
             <Tooltip
               TransitionComponent={Zoom}
               title="Choose the place before the next step"

@@ -44,7 +44,7 @@ export default function Summary() {
   const RegularMap = withScriptjs(
     withGoogleMap((props) => (
       <GoogleMap
-        defaultZoom={16}
+        defaultZoom={17}
         defaultCenter={defaultCenter}
         defaultOptions={defaultOptions}
       >
