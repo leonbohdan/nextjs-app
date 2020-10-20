@@ -114,7 +114,7 @@ export default function Index() {
               <DateTimePicker
                 id="first_date"
                 ampm={false}
-                label="Choose first day and time"
+                label="Check-in time"
                 inputVariant="outlined"
                 value={selectedFirstDate}
                 onChange={firstHandleDateChange}
@@ -130,7 +130,7 @@ export default function Index() {
               <DateTimePicker
                 id="second_date"
                 ampm={false}
-                label="Choose last day and time"
+                label="Check-out time"
                 inputVariant="outlined"
                 value={selectedSecondDate}
                 onChange={secondHandleDateChange}
@@ -138,7 +138,7 @@ export default function Index() {
                 margin="normal"
                 minDate={selectedFirstDate}
                 autoOk
-                title="Duration can not be less than 4 hours or checkout time - less than checkin time"
+                title="The duration can not be less than 4 hours or check-out time can not be less than 2 hours than check-in time"
               />
             </label>
           </Box>
@@ -157,7 +157,7 @@ export default function Index() {
             (mins2 % 60) - (mins1 % 60) < 0 ? (
               <Tooltip
                 TransitionComponent={Zoom}
-                title="Duration can not be less than 4 hours or checkout time - less than checkin time"
+                title="The duration can not be less than 4 hours or check-out time can not be less than 2 hours than check-in time"
                 leaveDelay={200}
               >
                 <span>
