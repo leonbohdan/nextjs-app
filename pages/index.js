@@ -25,7 +25,7 @@ export default function Index() {
       selectedFirstDate.getFullYear(),
       selectedFirstDate.getMonth(),
       selectedFirstDate.getDate(),
-      selectedFirstDate.getHours(),
+      selectedFirstDate.getHours() + 2,
       selectedFirstDate.getMinutes(),
     ),
   );
@@ -37,7 +37,7 @@ export default function Index() {
         date.getFullYear(),
         date.getMonth(),
         date.getDate(),
-        date.getHours(),
+        date.getHours() + 2,
         date.getMinutes(),
       ),
     );
@@ -67,6 +67,29 @@ export default function Index() {
       ),
     });
   };
+
+  const date1 = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth() + 1,
+    startDate.getDate(),
+    startDate.getHours(),
+    startDate.getMinutes(),
+  );
+  const date2 = new Date(
+    endDate.getFullYear(),
+    endDate.getMonth() + 1,
+    endDate.getDate(),
+    endDate.getHours(),
+    endDate.getMinutes(),
+  );
+
+  const msec2 = date2.getTime();
+  const mins2 = Math.floor(msec2 / 60000);
+  const hrs2 = Math.floor(mins2 / 60) % 24;
+
+  const msec1 = date1.getTime();
+  const mins1 = Math.floor(msec1 / 60000);
+  const hrs1 = Math.floor(mins1 / 60) % 24;
 
   return (
     <MainLayout title="Start page">
@@ -115,7 +138,7 @@ export default function Index() {
                 margin="normal"
                 minDate={selectedFirstDate}
                 autoOk
-                title="Duration can not be less than 4 hours"
+                title="Duration can not be less than 4 hours or checkout time - less than checkin time"
               />
             </label>
           </Box>
@@ -129,10 +152,12 @@ export default function Index() {
         >
           <Box p={4}>
             {Math.abs(selectedSecondDate) - Math.abs(selectedFirstDate) <=
-            14360000 ? (
+              14360000 ||
+            hrs2 - hrs1 < 2 ||
+            (mins2 % 60) - (mins1 % 60) < 0 ? (
               <Tooltip
                 TransitionComponent={Zoom}
-                title="Duration can not be less than 4 hours"
+                title="Duration can not be less than 4 hours or checkout time - less than checkin time"
                 leaveDelay={200}
               >
                 <span>
