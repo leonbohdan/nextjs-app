@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -33,7 +32,7 @@ export default function Summary() {
     endDate.getHours(),
     endDate.getMinutes(),
   );
-  
+
   const msec = date2.getTime() - date1.getTime();
   const mins = Math.floor(msec / 60000);
   const hrs = Math.floor(mins / 60);
@@ -100,7 +99,9 @@ export default function Summary() {
               <Divider orientation="vertical" flexItem />
 
               <div>
-                {`Duration: ${days} days, ${hrs % 24} hours, ${mins % 60} minutes`}
+                {`Duration: ${days} days, ${hrs % 24} hours, ${
+                  mins % 60
+                } minutes`}
               </div>
             </Box>
             <Divider />
@@ -131,11 +132,9 @@ export default function Summary() {
           alignItems="center"
         >
           <Box p={4}>
-            <Link href="/">
-              <Button variant="outlined" color="primary">
-                Back Home
-              </Button>
-            </Link>
+            <Button variant="outlined" color="primary" href="/">
+              Back Home
+            </Button>
           </Box>
         </Box>
       </Container>

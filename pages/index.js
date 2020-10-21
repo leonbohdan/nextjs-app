@@ -1,5 +1,4 @@
 import 'date-fns';
-import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -167,11 +166,9 @@ export default function Index() {
                 </span>
               </Tooltip>
             ) : (
-              <Link href="/address">
-                <Button variant="outlined" color="primary">
-                  Go to the next step
-                </Button>
-              </Link>
+              <Button variant="outlined" color="primary" href="/address">
+                Go to the next step
+              </Button>
             )}
           </Box>
         </Box>

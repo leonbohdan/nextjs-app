@@ -1,7 +1,6 @@
 import { useState, useContext, useMemo, useEffect, useRef } from "react";
 import TextField from "@material-ui/core/TextField";
 import Box from '@material-ui/core/Box';
-import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
@@ -9,6 +8,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
@@ -125,68 +125,70 @@ export default function Address() {
       >
         <h1>Choose the place</h1>
 
-        <Autocomplete
-          style={{ width: 300 }}
-          getOptionLabel={(option) =>
-            typeof option === "string" ? option : option.description
-          }
-          filterOptions={(x) => x}
-          options={options}
-          autoComplete
-          includeInputInList
-          filterSelectedOptions
-          value={value}
-          onChange={(event, newValue) => {
-            setOptions(newValue ? [newValue, ...options] : options);
-            setValue(newValue);
-          }}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-            handleSelect(newInputValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Enter a place"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-          renderOption={(option) => {
-            const matches =
-              option.structured_formatting.main_text_matched_substrings;
-            const parts = parse(
-              option.structured_formatting.main_text,
-              matches.map((match) => [
-                match.offset,
-                match.offset + match.length,
-              ]),
-            );
+        <Paper elevation={3}>
+          <Autocomplete
+            style={{ width: 300 }}
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option.description
+            }
+            filterOptions={(x) => x}
+            options={options}
+            autoComplete
+            includeInputInList
+            filterSelectedOptions
+            value={value}
+            onChange={(event, newValue) => {
+              setOptions(newValue ? [newValue, ...options] : options);
+              setValue(newValue);
+            }}
+            onInputChange={(event, newInputValue) => {
+              setInputValue(newInputValue);
+              handleSelect(newInputValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Enter a place"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+            renderOption={(option) => {
+              const matches =
+                option.structured_formatting.main_text_matched_substrings;
+              const parts = parse(
+                option.structured_formatting.main_text,
+                matches.map((match) => [
+                  match.offset,
+                  match.offset + match.length,
+                ]),
+              );
 
-            return (
-              <Grid container alignItems="center">
-                <Grid item>
-                  <LocationOnIcon className={classes.icon} />
+              return (
+                <Grid container alignItems="center">
+                  <Grid item>
+                    <LocationOnIcon className={classes.icon} />
+                  </Grid>
+
+                  <Grid item xs>
+                    {parts.map((part, index) => (
+                      <span
+                        key={index}
+                        style={{ fontWeight: part.highlight ? 700 : 400 }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+
+                    <Typography variant="body2" color="textSecondary">
+                      {option.structured_formatting.secondary_text}
+                    </Typography>
+                  </Grid>
                 </Grid>
-
-                <Grid item xs>
-                  {parts.map((part, index) => (
-                    <span
-                      key={index}
-                      style={{ fontWeight: part.highlight ? 700 : 400 }}
-                    >
-                      {part.text}
-                    </span>
-                  ))}
-
-                  <Typography variant="body2" color="textSecondary">
-                    {option.structured_formatting.secondary_text}
-                  </Typography>
-                </Grid>
-              </Grid>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        </Paper>
 
         <Box p={4}>
           {!active ? (
@@ -202,11 +204,9 @@ export default function Address() {
               </span>
             </Tooltip>
           ) : (
-            <Link href="/summary">
-              <Button variant="outlined" color="primary">
-                Go to the next step
-              </Button>
-            </Link>
+            <Button variant="outlined" color="primary" href="/summary">
+              Go to the next step
+            </Button>
           )}
         </Box>
       </Box>
