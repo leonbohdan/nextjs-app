@@ -18,22 +18,7 @@ export default function Summary() {
     StateContext,
   );
 
-  const date1 = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + 1,
-    startDate.getDate(),
-    startDate.getHours(),
-    startDate.getMinutes(),
-  );
-  const date2 = new Date(
-    endDate.getFullYear(),
-    endDate.getMonth() + 1,
-    endDate.getDate(),
-    endDate.getHours(),
-    endDate.getMinutes(),
-  );
-
-  const msec = date2.getTime() - date1.getTime();
+  const msec = endDate - startDate;
   const mins = Math.floor(msec / 60000);
   const hrs = Math.floor(mins / 60);
   const days = Math.floor(hrs / 24);

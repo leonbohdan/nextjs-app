@@ -2,11 +2,11 @@ import 'date-fns';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Link from 'next/link';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import MainLayout from '../components/MainLayout';
-
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -17,53 +17,36 @@ import { StateContext, DispatchContext } from "../components/StateContext";
 export default function Index() {
   const dispatch = useContext(DispatchContext);
   const { startDate, endDate } = useContext(StateContext);
+  const canGoNext = endDate - startDate > 4 * 60 * 60 * 1000 - 60000;
 
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
-  const [selectedSecondDate, setSelectedSecondDate] = useState(
-    new Date(
-      selectedFirstDate.getFullYear(),
-      selectedFirstDate.getMonth(),
-      selectedFirstDate.getDate(),
-      selectedFirstDate.getHours() + 2,
-      selectedFirstDate.getMinutes(),
-    ),
-  );
+  const [selectedSecondDate, setSelectedSecondDate] = useState(new Date());
+
+  useEffect(() => {
+    setSelectedSecondDate(
+      new Date(selectedSecondDate.setHours(selectedFirstDate.getHours() + 2)),
+    );
+
+    dispatch({
+      type: "endDate",
+      payload: new Date(selectedSecondDate.setHours(
+        selectedFirstDate.getHours() + 2,
+      )),
+    });
+  }, []);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
-    setSelectedSecondDate(
-      new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours() + 2,
-        date.getMinutes(),
-      ),
-    );
 
     dispatch({ type: "startDate", payload: date });
   };
 
   const secondHandleDateChange = (date) => {
-    setSelectedSecondDate(
-      new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-      ),
-    );
+    setSelectedSecondDate(date);
 
     dispatch({
       type: "endDate",
-      payload: new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-      ),
+      payload: date,
     });
   };
 
@@ -74,6 +57,11 @@ export default function Index() {
     startDate.getHours(),
     startDate.getMinutes(),
   );
+
+  const msec1 = date1.getTime();
+  const mins1 = Math.floor(msec1 / 60000);
+  const hrs1 = Math.floor(mins1 / 60) % 24;
+
   const date2 = new Date(
     endDate.getFullYear(),
     endDate.getMonth() + 1,
@@ -85,10 +73,6 @@ export default function Index() {
   const msec2 = date2.getTime();
   const mins2 = Math.floor(msec2 / 60000);
   const hrs2 = Math.floor(mins2 / 60) % 24;
-
-  const msec1 = date1.getTime();
-  const mins1 = Math.floor(msec1 / 60000);
-  const hrs1 = Math.floor(mins1 / 60) % 24;
 
   return (
     <MainLayout title="Start page">
@@ -150,8 +134,7 @@ export default function Index() {
           alignItems="center"
         >
           <Box p={4}>
-            {Math.abs(selectedSecondDate) - Math.abs(selectedFirstDate) <=
-              14360000 ||
+            {!canGoNext ||
             hrs2 - hrs1 < 2 ||
             (mins2 % 60) - (mins1 % 60) < 0 ? (
               <Tooltip
@@ -166,9 +149,11 @@ export default function Index() {
                 </span>
               </Tooltip>
             ) : (
-              <Button variant="outlined" color="primary" href="/address">
-                Go to the next step
-              </Button>
+              <Link href="/address">
+                <Button variant="outlined" color="primary">
+                  Go to the next step
+                </Button>
+              </Link>
             )}
           </Box>
         </Box>

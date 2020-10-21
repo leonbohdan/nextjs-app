@@ -9,6 +9,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Link from 'next/link';
 import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
@@ -204,9 +205,11 @@ export default function Address() {
               </span>
             </Tooltip>
           ) : (
-            <Button variant="outlined" color="primary" href="/summary">
-              Go to the next step
-            </Button>
+            <Link href="/summary">
+              <Button variant="outlined" color="primary">
+                Go to the next step
+              </Button>
+            </Link>
           )}
         </Box>
       </Box>
