@@ -97,8 +97,13 @@ export default function Index() {
             justifyContent="space-around"
             alignItems="center"
           >
-            <label htmlFor="first_date">
-              Check-in time
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <label htmlFor="first_date">Check-in time</label>
               <DatePicker
                 id="first_date"
                 withPortal
@@ -115,10 +120,15 @@ export default function Index() {
                   firstHandleDateChange(date);
                 }}
               />
-            </label>
+            </Box>
 
-            <label htmlFor="second_date">
-              Check-out time
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <label htmlFor="second_date">Check-out time</label>
               <DatePicker
                 id="second_date"
                 withPortal
@@ -135,7 +145,7 @@ export default function Index() {
                   secondHandleDateChange(date);
                 }}
               />
-            </label>
+            </Box>
           </Box>
         </Paper>
 
