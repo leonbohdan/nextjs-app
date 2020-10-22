@@ -1,42 +1,45 @@
-import 'date-fns';
+import { isSameDay, startOfToday, endOfDay } from 'date-fns';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Link from 'next/link';
 import Tooltip from '@material-ui/core/Tooltip';
+import Paper from "@material-ui/core/Paper";
 import Zoom from '@material-ui/core/Zoom';
 import { useState, useContext, useEffect } from "react";
 import MainLayout from '../components/MainLayout';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  DateTimePicker,
-} from '@material-ui/pickers';
 import { StateContext, DispatchContext } from "../components/StateContext";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Index() {
   const dispatch = useContext(DispatchContext);
   const { startDate, endDate } = useContext(StateContext);
-  const canGoNext = endDate - startDate > 4 * 60 * 60 * 1000 - 60000;
+  const canGoNext = (endDate - startDate) > (4 * 60 * 60 * 1000) - 60000;
 
   const [selectedFirstDate, setSelectedFirstDate] = useState(new Date());
   const [selectedSecondDate, setSelectedSecondDate] = useState(new Date());
+  const [minTime, setMinTime] = useState(new Date());
+
+  const calculateMinTime = (date) =>
+    isSameDay(date, new Date()) ? new Date() : startOfToday();
 
   useEffect(() => {
     setSelectedSecondDate(
-      new Date(selectedSecondDate.setHours(selectedFirstDate.getHours() + 2)),
+      new Date(selectedSecondDate.setHours(selectedFirstDate.getHours() + 4)),
     );
 
     dispatch({
       type: "endDate",
       payload: new Date(selectedSecondDate.setHours(
-        selectedFirstDate.getHours() + 2,
+        selectedFirstDate.getHours() + 4,
       )),
     });
   }, []);
 
   const firstHandleDateChange = (date) => {
     setSelectedFirstDate(date);
+    setMinTime(calculateMinTime(date));
 
     dispatch({ type: "startDate", payload: date });
   };
@@ -86,46 +89,55 @@ export default function Index() {
           <h1>Choose the start and end date</h1>
         </Box>
 
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Paper elevation={3}>
           <Box
+            p={4}
             display="flex"
             flexDirection="row"
             justifyContent="space-around"
             alignItems="center"
           >
             <label htmlFor="first_date">
-              <DateTimePicker
+              Check-in time
+              <DatePicker
                 id="first_date"
-                ampm={false}
-                label="Check-in time"
-                inputVariant="outlined"
-                value={selectedFirstDate}
-                onChange={firstHandleDateChange}
-                format="yyyy/MM/dd HH:mm"
-                margin="normal"
+                withPortal
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, yyyy HH:mm"
+                selected={selectedFirstDate}
                 minDate={new Date()}
-                autoOk
-                title="Set the first day"
+                minTime={minTime}
+                maxTime={endOfDay(new Date())}
+                showDisabledMonthNavigation
+                onChange={(date) => {
+                  firstHandleDateChange(date);
+                }}
               />
             </label>
 
             <label htmlFor="second_date">
-              <DateTimePicker
+              Check-out time
+              <DatePicker
                 id="second_date"
-                ampm={false}
-                label="Check-out time"
-                inputVariant="outlined"
-                value={selectedSecondDate}
-                onChange={secondHandleDateChange}
-                format="yyyy/MM/dd HH:mm"
-                margin="normal"
+                withPortal
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                minTime={selectedFirstDate}
+                maxTime={endOfDay(selectedFirstDate)}
+                dateFormat="MMMM d, yyyy HH:mm"
+                selected={selectedSecondDate}
                 minDate={selectedFirstDate}
-                autoOk
-                title="The duration can not be less than 4 hours or check-out time can not be less than 2 hours than check-in time"
+                showDisabledMonthNavigation
+                onChange={(date) => {
+                  secondHandleDateChange(date);
+                }}
               />
             </label>
           </Box>
-        </MuiPickersUtilsProvider>
+        </Paper>
 
         <Box
           display="flex"
@@ -134,6 +146,25 @@ export default function Index() {
           alignItems="center"
         >
           <Box p={4}>
+            <Paper elevation={3}>
+              <Box
+                p={1}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <div>Pay attention.</div>
+                <div>1. The duration can not be less than 4 hours</div>
+                <div>
+                  2. Сheck-out time can not be less than 2 hours than check-in
+                  time
+                </div>
+              </Box>
+            </Paper>
+          </Box>
+
+          <Box>
             {!canGoNext ||
             hrs2 - hrs1 < 2 ||
             (mins2 % 60) - (mins1 % 60) < 0 ? (
