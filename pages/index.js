@@ -86,7 +86,8 @@ export default function Index() {
           justifyContent="center"
           alignItems="center"
         >
-          <h1>Choose the start and end date</h1>
+          <h1>Step One</h1>
+          <h3>Choose start and end day of visiting</h3>
         </Box>
 
         <Paper elevation={3}>

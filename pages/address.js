@@ -124,7 +124,8 @@ export default function Address() {
         justifyContent="center"
         alignItems="center"
       >
-        <h1>Choose the place</h1>
+        <h1>Step Two</h1>
+        <h3>Choose the place you are wanna visit</h3>
 
         <Paper elevation={3}>
           <Autocomplete

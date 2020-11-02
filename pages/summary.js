@@ -52,42 +52,42 @@ export default function Summary() {
               flexDirection="row"
               justifyContent="space-around"
             >
-              <h1>Summary</h1>
+              <h1>Here's your place of visiting</h1>
             </Box>
             <Divider />
 
             <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-around"
+              display="grid"
+              justifyContent="center"
             >
-              <div>
-                From{`: `}
-                {` ${startDate.getFullYear()}/${
-                  startDate.getMonth() + 1
-                }/${startDate.getDate()} ` +
-                  `0${startDate.getHours()}`.slice(-2) +
-                  ":" +
-                  `:0${startDate.getMinutes()}`.slice(-2)}
-              </div>
-              <Divider orientation="vertical" flexItem />
+              <h3>
+                {`Duration of visit is: ${days} days, ${hrs % 24} hours, ${mins % 60} minutes`}
+              </h3>
 
-              <div>
-                To{": "}
-                {`${endDate.getFullYear()}/${
-                  endDate.getMonth() + 1
-                }/${endDate.getDate()} ` +
-                  `0${endDate.getHours()}`.slice(-2) +
-                  ":" +
-                  `0${endDate.getMinutes()}`.slice(-2)}
-              </div>
-              <Divider orientation="vertical" flexItem />
+              <Box
+                display="flex"
+                justifyContent="space-around"
+              >
+                <div>
+                  From{`: `}
+                  {` ${startDate.getFullYear()}/${
+                    startDate.getMonth() + 1
+                  }/${startDate.getDate()} ` +
+                    `0${startDate.getHours()}`.slice(-2) +
+                    `:` +
+                    `:0${startDate.getMinutes()}`.slice(-2)}
+                </div>
 
-              <div>
-                {`Duration: ${days} days, ${hrs % 24} hours, ${
-                  mins % 60
-                } minutes`}
-              </div>
+                <div>
+                  To{`: `}
+                  {`${endDate.getFullYear()}/${
+                    endDate.getMonth() + 1
+                  }/${endDate.getDate()} ` +
+                    `0${endDate.getHours()}`.slice(-2) +
+                    `:` +
+                    `0${endDate.getMinutes()}`.slice(-2)}
+                </div>
+              </Box>
             </Box>
             <Divider />
 
