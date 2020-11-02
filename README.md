@@ -1,3 +1,32 @@
+# React App Form of Visiting
+
+- [DEMO](https://nextjs-app-git-develop.leonbohdan.vercel.app/)
+
+- [Code](https://github.com/leonbohdan/nextjs-app/tree/develop)
+
+# About
+
+The project was created with:
+
+- React
+- React/Hooks
+- Next.js
+- JavaScript
+- HTML5
+- CSS3
+- SASS
+- BEM
+- Material UI
+- Google API
+
+# App has features:
+
+- First-page choosing start and end the day; 
+- Second page choosing the place you wanna visit; 
+- The last page can see information about the chosen place and time of visiting + place opens on Google maps.
+
+#
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
